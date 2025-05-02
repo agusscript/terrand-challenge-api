@@ -11,6 +11,10 @@ export class UserService {
     private readonly userMapper: UserMapper,
   ) { }
 
+  async getOneById(id: number): Promise<User> {
+    return await this.userRepository.getOneById(id);
+  }
+
   async getOneByEmail(email: string): Promise<User> {
     return await this.userRepository.getOneByEmail(email);
   }
