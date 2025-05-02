@@ -1,0 +1,21 @@
+import { Injectable } from "@nestjs/common";
+import { CreateRecipeDto } from "../dto/create-recipe.dto";
+import { Recipe } from "../entity/recipe.entity";
+import { User } from "src/module/user/entity/user.entity";
+
+@Injectable()
+export class RecipeMapper {
+  fromCreateRecipeDtoToRecipe(
+    createRecipeDto: CreateRecipeDto,
+    user: User
+  ): Recipe {
+    const recipe = new Recipe();
+
+    recipe.title = createRecipeDto.title;
+    recipe.description = createRecipeDto.description;
+    recipe.ingredients = createRecipeDto.ingredients;
+    recipe.user = user;
+
+    return recipe;
+  }
+}
