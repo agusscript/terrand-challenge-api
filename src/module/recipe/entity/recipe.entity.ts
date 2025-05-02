@@ -15,6 +15,9 @@ export class Recipe {
   @Column("simple-array")
   ingredients: string[];
 
+  @ManyToOne(() => User, (user) => user.recipes, { nullable: false })
+  user: User;
+
   @DeleteDateColumn()
   deletedAt: Date;
 }
