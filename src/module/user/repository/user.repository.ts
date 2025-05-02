@@ -9,6 +9,18 @@ export class UserRepository {
     private readonly repository: Repository<User>
   ) { }
 
+  async getOneById(id: number): Promise<User> {
+    const user = await this.repository.findOne({
+      where: { id }
+    });
+
+    if (!user) {
+      throw new BadRequestException("User not found");
+    }
+
+    return user;
+  }
+
   async getOneByEmail(email: string): Promise<User> {
     const user = await this.repository.findOne({
       where: { email }
