@@ -1,5 +1,5 @@
 import { UpdateRecipeDto } from "../dto/update-recipe.dto";
-import { BadRequestException } from "@nestjs/common";
+import { NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Recipe } from "../entity/recipe.entity";
 import { Repository } from "typeorm";
@@ -21,7 +21,7 @@ export class RecipeRepository {
     });
 
     if (!recipe) {
-      throw new BadRequestException("Recipe not found");
+      throw new NotFoundException(`Recipe with ID ${id} not found`);
     }
 
     return recipe;
@@ -41,7 +41,7 @@ export class RecipeRepository {
     });
 
     if (!recipeToUpdate) {
-      throw new BadRequestException("Recipe not found");
+      throw new NotFoundException(`Recipe with ID ${id} not found`);
     }
 
     return this.repository.save(recipeToUpdate);
@@ -53,7 +53,7 @@ export class RecipeRepository {
     });
 
     if (!recipeToDelete) {
-      throw new BadRequestException("Recipe not foundasd");
+      throw new NotFoundException(`Recipe with ID ${id} not found`);
     }
 
     await this.repository.softDelete(id);
