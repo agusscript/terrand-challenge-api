@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from "@nestjs/common";
-import { AuthenticatedRequest } from "src/module/authentication/interface/authenticated-request.interface";
+import { IAuthenticatedRequest } from "src/module/authentication/interface/authenticated-request.interface";
 import { AuthenticationGuard } from "src/module/authentication/guard/authentication.guard";
 import { RecipeService } from "../service/recipe.service";
 import { CreateRecipeDto } from "../dto/create-recipe.dto";
@@ -26,7 +26,7 @@ export class RecipeController {
   @Post()
   async create(
     @Body() createRecipeDto: CreateRecipeDto,
-    @Req() request: AuthenticatedRequest,
+    @Req() request: IAuthenticatedRequest,
   ): Promise<Recipe> {
     return this.recipeService.create(
       createRecipeDto,
@@ -38,7 +38,7 @@ export class RecipeController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateRecipeDto: UpdateRecipeDto,
-    @Req() request: AuthenticatedRequest,
+    @Req() request: IAuthenticatedRequest,
   ): Promise<Recipe> {
     return this.recipeService.update(
       id,
@@ -50,7 +50,7 @@ export class RecipeController {
   @Delete(":id")
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Req() request: AuthenticatedRequest,
+    @Req() request: IAuthenticatedRequest,
   ): Promise<void> {
     return this.recipeService.delete(
       id,
