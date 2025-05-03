@@ -1,7 +1,7 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../entity/user.entity";
 import { Repository } from "typeorm";
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, NotFoundException } from "@nestjs/common";
 
 export class UserRepository {
   constructor(
@@ -15,7 +15,7 @@ export class UserRepository {
     });
 
     if (!user) {
-      throw new BadRequestException("User not found");
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
 
     return user;
@@ -27,7 +27,7 @@ export class UserRepository {
     });
 
     if (!user) {
-      throw new BadRequestException("User not found");
+      throw new NotFoundException(`User with email ${email} not found`);
     }
 
     return user;
