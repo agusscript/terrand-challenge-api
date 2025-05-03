@@ -4,6 +4,8 @@ import { UserService } from "src/module/user/service/user.service";
 import { SignInDto } from "../dto/signIn.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as bcryptjs from "bcryptjs";
+import { ISignInResponse } from "../interface/sign-in-response.interface";
+import { User } from "src/module/user/entity/user.entity";
 
 @Injectable()
 export class AuthenticationService {
@@ -12,12 +14,12 @@ export class AuthenticationService {
     private readonly jwtService: JwtService
   ) { }
 
-  async signUp(signUpDto: SignUpDto) {
+  async signUp(signUpDto: SignUpDto): Promise<User> {
     const hashedPassword = await bcryptjs.hash(signUpDto.password, 10);
     return await this.userService.create({ ...signUpDto, password: hashedPassword });
   }
 
-  async signIn(signInDto: SignInDto) {
+  async signIn(signInDto: SignInDto): Promise<ISignInResponse> {
     const { email, password } = signInDto;
     const user = await this.userService.getOneByEmail(email);
 
@@ -35,7 +37,6 @@ export class AuthenticationService {
     const token = await this.jwtService.signAsync(payload);
 
     return {
-      email: user.email,
       token,
     };
   }
