@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { SignUpDto } from "../dto/signup.dto";
 import { UserService } from "src/module/user/service/user.service";
 import { SignInDto } from "../dto/signIn.dto";
@@ -30,7 +30,7 @@ export class AuthenticationService {
     const isPasswordValid = await bcryptjs.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException("Invalid password");
+      throw new BadRequestException('Invalid credentials');
     }
 
     const payload = { id: user.id, name: user.name, email: user.email, };
