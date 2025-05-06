@@ -18,6 +18,11 @@ export class RecipeService {
     return await this.recipeRepository.getAll();
   }
 
+  async getAllByUserId(userId: number): Promise<Recipe[]> {
+    const user = await this.userService.getOneById(userId);
+    return await this.recipeRepository.getAllByUserId(user.id);
+  }
+
   async getOneById(id: number): Promise<Recipe> {
     return await this.recipeRepository.getOneById(id);
   }

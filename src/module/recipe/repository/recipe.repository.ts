@@ -14,6 +14,14 @@ export class RecipeRepository {
     return await this.repository.find();
   }
 
+  async getAllByUserId(userId: number): Promise<Recipe[]> {
+    return await this.repository.find({
+      where: {
+        user: { id: userId },
+      },
+    });
+  }
+
   async getOneById(id: number): Promise<Recipe> {
     const recipe = await this.repository.findOne({
       where: { id },

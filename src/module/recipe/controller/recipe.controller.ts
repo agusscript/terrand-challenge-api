@@ -16,6 +16,15 @@ export class RecipeController {
     return this.recipeService.getAll();
   }
 
+  @Get("mine")
+  async getAllByUserId(
+    @Req() request: IAuthenticatedRequest,
+  ): Promise<Recipe[]> {
+    return this.recipeService.getAllByUserId(
+      request.user.id
+    );
+  }
+
   @Get(":id")
   async getOneById(
     @Param('id', ParseIntPipe) id: number
