@@ -14,6 +14,7 @@ export class RecipeMapper {
     recipe.title = createRecipeDto.title;
     recipe.description = createRecipeDto.description;
     recipe.ingredients = createRecipeDto.ingredients;
+    recipe.imagePath = createRecipeDto.imagePath;
     recipe.user = user;
 
     return recipe;

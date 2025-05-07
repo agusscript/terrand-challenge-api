@@ -15,6 +15,9 @@ export class Recipe {
   @Column("simple-array")
   ingredients: string[];
 
+  @Column({ nullable: true })
+  imagePath: string;
+
   @ManyToOne(() => User, (user) => user.recipes, { nullable: false })
   user: User;
 
