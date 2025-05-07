@@ -8,7 +8,6 @@ import { Recipe } from "../entity/recipe.entity";
 import FileUploadHandler from "../decorator/file-upload-handler.decorator";
 
 @Controller("recipe")
-@UseGuards(AuthenticationGuard)
 export class RecipeController {
   constructor(private readonly recipeService: RecipeService) { }
 
@@ -18,6 +17,7 @@ export class RecipeController {
   }
 
   @Get("mine")
+  @UseGuards(AuthenticationGuard)
   async getAllByUserId(
     @Req() request: IAuthenticatedRequest,
   ): Promise<Recipe[]> {
@@ -35,6 +35,7 @@ export class RecipeController {
 
   @Post()
   @FileUploadHandler("image", "./uploads")
+  @UseGuards(AuthenticationGuard)
   async create(
     @Body() createRecipeDto: CreateRecipeDto,
     @Req() request: IAuthenticatedRequest,
@@ -49,6 +50,7 @@ export class RecipeController {
 
   @Patch(":id")
   @FileUploadHandler("image", "./uploads")
+  @UseGuards(AuthenticationGuard)
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateRecipeDto: UpdateRecipeDto,
@@ -64,6 +66,7 @@ export class RecipeController {
   }
 
   @Delete(":id")
+  @UseGuards(AuthenticationGuard)
   async delete(
     @Param('id', ParseIntPipe) id: number,
     @Req() request: IAuthenticatedRequest,
