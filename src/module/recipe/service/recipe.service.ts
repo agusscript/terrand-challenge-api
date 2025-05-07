@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { RecipeRepository } from "../repository/recipe.repository";
 import { UserService } from "src/module/user/service/user.service";
 import { CreateRecipeDto } from "../dto/create-recipe.dto";
@@ -30,6 +30,7 @@ export class RecipeService {
   async create(
     createRecipeDto: CreateRecipeDto,
     userId: number,
+    image?: Express.Multer.File,
   ): Promise<Recipe> {
     const user = await this.userService.getOneById(userId);
 
@@ -37,6 +38,10 @@ export class RecipeService {
       createRecipeDto,
       user,
     );
+    
+    if (image) {
+      mappedRecipe.imagePath = image.filename;
+    }
 
     return await this.recipeRepository.create(mappedRecipe);
   }
@@ -45,11 +50,16 @@ export class RecipeService {
     id: number,
     updateRecipeDto: UpdateRecipeDto,
     userId: number,
+    image?: Express.Multer.File,
   ): Promise<Recipe> {
     const recipeToUpdate = await this.recipeRepository.getOneById(id);
 
     if (recipeToUpdate.user.id !== userId) {
       throw new UnauthorizedException("You cannot edit this recipe");
+    }
+
+    if (image) {
+      updateRecipeDto.imagePath = image.filename;
     }
 
     return await this.recipeRepository.update(id, updateRecipeDto);

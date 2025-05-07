@@ -41,10 +41,10 @@ export class RecipeRepository {
 
   async update(
     id: number,
-    updateRecipeDto: UpdateRecipeDto,
+    updates: Partial<Recipe>
   ): Promise<Recipe> {
     const recipeToUpdate = await this.repository.preload({
-      ...updateRecipeDto,
+      ...updates,
       id,
     });
 

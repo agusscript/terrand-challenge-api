@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UploadedFile, UseGuards, } from "@nestjs/common";
 import { IAuthenticatedRequest } from "src/module/authentication/interface/authenticated-request.interface";
 import { AuthenticationGuard } from "src/module/authentication/guard/authentication.guard";
 import { RecipeService } from "../service/recipe.service";
 import { CreateRecipeDto } from "../dto/create-recipe.dto";
 import { UpdateRecipeDto } from "../dto/update-recipe.dto";
 import { Recipe } from "../entity/recipe.entity";
+import FileUploadHandler from "../decorator/file-upload-handler.decorator";
 
 @Controller("recipe")
 @UseGuards(AuthenticationGuard)
@@ -33,26 +34,32 @@ export class RecipeController {
   }
 
   @Post()
+  @FileUploadHandler("image", "./uploads")
   async create(
     @Body() createRecipeDto: CreateRecipeDto,
     @Req() request: IAuthenticatedRequest,
+    @UploadedFile() image?: Express.Multer.File,
   ): Promise<Recipe> {
     return this.recipeService.create(
       createRecipeDto,
-      request.user.id
+      request.user.id,
+      image
     );
   }
 
   @Patch(":id")
+  @FileUploadHandler("image", "./uploads")
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateRecipeDto: UpdateRecipeDto,
     @Req() request: IAuthenticatedRequest,
+    @UploadedFile() image?: Express.Multer.File,
   ): Promise<Recipe> {
     return this.recipeService.update(
       id,
       updateRecipeDto,
-      request.user.id
+      request.user.id,
+      image
     );
   }
 
