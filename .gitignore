@@ -137,3 +137,6 @@ dist
 
 # Docker
 /data/docker
+
+# Static files
+/uploads
