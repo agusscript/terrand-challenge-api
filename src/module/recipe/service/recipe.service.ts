@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { RecipeRepository } from "../repository/recipe.repository";
 import { UserService } from "src/module/user/service/user.service";
 import { CreateRecipeDto } from "../dto/create-recipe.dto";
@@ -55,7 +55,7 @@ export class RecipeService {
     const recipeToUpdate = await this.recipeRepository.getOneById(id);
 
     if (recipeToUpdate.user.id !== userId) {
-      throw new UnauthorizedException("You cannot edit this recipe");
+      throw new ForbiddenException("You cannot edit this recipe");
     }
 
     if (image) {
@@ -69,7 +69,7 @@ export class RecipeService {
     const recipeToDelete = await this.recipeRepository.getOneById(id);
 
     if (recipeToDelete.user.id !== userId) {
-      throw new UnauthorizedException("You cannot delete this recipe");
+      throw new ForbiddenException("You cannot delete this recipe");
     }
 
     return await this.recipeRepository.delete(id);
