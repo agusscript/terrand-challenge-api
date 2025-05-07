@@ -6,6 +6,8 @@ import { datasourceOptions } from './config/orm.config';
 import { UserModule } from './module/user/user.module';
 import { AuthenticationModule } from './module/authentication/authentication.module';
 import { RecipeModule } from './module/recipe/recipe.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -18,6 +20,16 @@ import { RecipeModule } from './module/recipe/recipe.module';
         ...datasourceOptions,
         autoLoadEntities: true,
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveStaticOptions: {
+        setHeaders: (res) => (
+          res.setHeader(
+            'Cross-Origin-Resource-Policy',
+            'cross-origin'
+          )),
+      }
     }),
     UserModule,
     AuthenticationModule,
