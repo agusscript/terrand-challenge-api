@@ -74,3 +74,25 @@ Create an app where users can register and share recipes.
 ### Technical requirement completed
 
 - [x] Use any JavaScript technology.
+
+## Extras
+
+Aditional information.
+
+## Entity Relationship Diagram
+
+![](public/erd.jpg)
+
+## Endpoints
+
+### Authentication
+    - POST /auth/sign-up
+    - POST /auth/sign-in
+
+### Recipe 
+    - GET /recipe
+    - GET /recipe/:id
+    - GET /recipe/mine
+    - POST /recipe
+    - PATCH /recipe/:id
+    - DELETE /recipe/:id
