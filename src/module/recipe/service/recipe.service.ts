@@ -34,7 +34,7 @@ export class RecipeService {
   ): Promise<Recipe> {
     const user = await this.userService.getOneById(userId);
 
-    const mappedRecipe = this.recipeMapper.fromCreateRecipeDtoToRecipe(
+    const mappedRecipe = this.recipeMapper.fromDtoToEntity(
       createRecipeDto,
       user,
     );

@@ -4,7 +4,7 @@ import { User } from "../entity/user.entity";
 
 @Injectable()
 export class UserMapper {
-  fromCreateUserDtoToUser(createUserDto: ICreateUserDto): User {
+  fromCreateDtoToEntity(createUserDto: ICreateUserDto): User {
     const user = new User();
 
     user.name = createUserDto.name;

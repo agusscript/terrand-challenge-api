@@ -20,7 +20,7 @@ export class UserService {
   }
 
   async create(createUserDto: ICreateUserDto): Promise<User> {
-    const mappedUser = this.userMapper.fromCreateUserDtoToUser(createUserDto);
+    const mappedUser = this.userMapper.fromCreateDtoToEntity(createUserDto);
     return await this.userRepository.create(mappedUser);
   }
 }

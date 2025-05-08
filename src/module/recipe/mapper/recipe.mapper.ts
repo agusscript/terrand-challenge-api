@@ -5,7 +5,7 @@ import { User } from "src/module/user/entity/user.entity";
 
 @Injectable()
 export class RecipeMapper {
-  fromCreateRecipeDtoToRecipe(
+  fromDtoToEntity(
     createRecipeDto: CreateRecipeDto,
     user: User
   ): Recipe {
